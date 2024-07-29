@@ -11,7 +11,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        'http://LibraryManagementSystem.test/books',
+        'http://LibraryManagementSystem.test/books/6'
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
