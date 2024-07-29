@@ -22,7 +22,7 @@ class BookFactory extends Factory
             'author' => fake()->authorName(),
             'description' => fake()->description(),
             'isbn' => fake()->postcode(),
-            'published' => fake()->dateTimeBetween('1800', '2010')->format('Y-m-d')
+            'published' => fake()->dateTimeBetween('1800', '2010')->format('Y')
         ];
     }
 }

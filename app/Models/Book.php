@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Book;
 use Carbon\Carbon;
 
 class Book extends Model
 {
     use HasFactory;
 
-    protected $table = "students";
+    protected $table = "boooks";
     protected $fillable = [
         'title',
         'author',
@@ -32,7 +33,7 @@ class Book extends Model
      {
          $published = $this->attributes['published'];
          if($published){
-             return Carbon::parse($published)->format('F d, Y');
+             return Carbon::parse($published)->format('Y');
          }
          return ' ';
      }
