@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
 use Illuminate\Http\Request;
+
+
+use App\Models\Book;
 
 class BookController extends Controller
 {
@@ -12,23 +14,16 @@ class BookController extends Controller
      */
     public function index()
     {
-        $data['books'] = Book::all();
-       return view('books.index', $data);
+        $books = Book::all();
+        return view('books.index', ['books' => $books]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create()
     {
-        // $book = new Book();
-        // $book-> author = $request['author'];
-        // $book-> title = $request['title'];
-        // $book-> description = $request['description'];
-        // $book-> isbn = $request['isbn'];
-        // $book-> published_year = $request['published_year'];
-        // $book->save();
-         return view('books.create');
+        return view('books.create');
     }
 
     /**
@@ -36,58 +31,63 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $book = new Book;
-        $book-> author = $request['author'];
-        $book-> title = $request['title'];
-        $book-> description = $request['description'];
-        $book-> isbn = $request['isbn'];
-        $book-> published_year = $request['published_year'];
-        $book->save();
-        
-         return redirect()->to('books');
-         //return redirect()->back();
+        $request->validate([
+            'title' => 'required',
+            'author' => 'required',
+            'description' => 'required',
+            'isbn' => 'required',
+            'published_year' => 'required|date',
+        ]);
 
+        $book = new Book();
+        $book->title = $request['title'];
+        $book->author = $request['author'];
+        $book->description = $request['description'];
+        $book->isbn = $request['isbn'];
+        $book->published_year = $request['published_year'];
+        $book->save();
+
+        // return redirect()->back();
+        return back()->with('success', 'Data saved successfully');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(String $id)
+    public function show(string $id)
     {
-        $data['book']=Book::find($id);
-        return view('books.edit', $data);
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(String $id)
+    public function edit(string $id)
     {
         $data['book'] = Book::find($id);
-        return view('books.edit', $data);
+        return view('books.update', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, String $id)
+    public function update(Request $request, string $id)
     {
         $book = Book::find($id);
-        $book-> author = $request['author'];
-        $book-> title = $request['title'];
-        $book-> description = $request['description'];
-        $book-> isbn = $request['isbn'];
-        $book-> published_year = $request['published_year'];
+        $book->title = $request['title'];
+        $book->author = $request['author'];
+        $book->description = $request['description'];
+        $book->isbn = $request['isbn'];
+        $book->published_year = $request['published_year'];
         $book->save();
-        
-         //return redirect()->to('books');
-         return redirect()->back();
+
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(String $id)
+    public function destroy(string $id)
     {
         $book = Book::find($id);
         $book->delete();
