@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('author');
             $table->string('description');
-            $table->string('isbn')->nullable();
-            $table->date('published')->nullable();
+            $table->integer('isbn');
+            $table->date('published_year');
             $table->timestamps();
         });
     }

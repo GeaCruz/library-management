@@ -11,10 +11,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->validateCsrfTokens(except:[
-        'https://LibraryManagementSystem.test/books',
-        'https://LibraryManagementSystem.test/books/6'
-        ]);
+        //
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

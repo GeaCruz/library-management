@@ -13,24 +13,22 @@ class BookController extends Controller
     public function index()
     {
         $data['books'] = Book::all();
-        return view('books.index', $data);
-       
-        //return Book::all();
+       return view('books.index', $data);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('books.create');
-        $books = new Book();
-        $books->title = $request['title'];
-        $books->author = $request['author'];
-        $books->description = $request['description'];
-        $books->isbn = $request['isbn'];
-        $books->published = $request['published'];
-        $books->save();
+        // $book = new Book();
+        // $book-> author = $request['author'];
+        // $book-> title = $request['title'];
+        // $book-> description = $request['description'];
+        // $book-> isbn = $request['isbn'];
+        // $book-> published_year = $request['published_year'];
+        // $book->save();
+         return view('books.create');
     }
 
     /**
@@ -38,62 +36,61 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $books = new Book();
-        $books->title = $request['title'];
-        $books->author = $request['author'];
-        $books->description = $request['description'];
-        $books->isbn = $request['isbn'];
-        $books->published = $request['published'];
-        $books->save();
+        $book = new Book;
+        $book-> author = $request['author'];
+        $book-> title = $request['title'];
+        $book-> description = $request['description'];
+        $book-> isbn = $request['isbn'];
+        $book-> published_year = $request['published_year'];
+        $book->save();
+        
+         return redirect()->to('books');
+         //return redirect()->back();
 
-        return redirect()->to('books');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(String $id)
     {
-        //return Book::find($id);
-
-        $books = Book::find($id);
-        return $books->title . ' ' .$books->author;
-
+        $data['book']=Book::find($id);
+        return view('books.edit', $data);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(String $id)
     {
-        $data['books'] = Book::find($id);
-        return view ('books.edit', $data);
+        $data['book'] = Book::find($id);
+        return view('books.edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, String $id)
     {
-        $books = Book::find($id);
-        $books->title = $request['title'];
-        $books->author = $request['author'];
-        $books->description = $request['description'];
-        $books->isbn = $request['isbn'];
-        $books->published = $request['published'];
-        $books->save();
-
-        return redirect()->back();
-
+        $book = Book::find($id);
+        $book-> author = $request['author'];
+        $book-> title = $request['title'];
+        $book-> description = $request['description'];
+        $book-> isbn = $request['isbn'];
+        $book-> published_year = $request['published_year'];
+        $book->save();
+        
+         //return redirect()->to('books');
+         return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(String $id)
     {
-        $books = Book::find($id);
-        $books->delete();
+        $book = Book::find($id);
+        $book->delete();
         return redirect()->to('books');
     }
 }
